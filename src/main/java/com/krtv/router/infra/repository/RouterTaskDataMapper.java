@@ -40,4 +40,16 @@ public class RouterTaskDataMapper implements Serializable {
     private LocalDateTime startedAt;
     private LocalDateTime finishedAt;
 
+    public String getURL() {
+        StringBuilder url = new StringBuilder();
+        url.append(protocol)
+                .append("://")
+                .append(ip)
+                .append(":")
+                .append(port)
+                .append("/")
+                .append(context);
+        return url.toString();
+    }
+
 }

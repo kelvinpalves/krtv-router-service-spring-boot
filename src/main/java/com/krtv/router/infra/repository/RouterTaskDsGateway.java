@@ -5,6 +5,7 @@
  */
 package com.krtv.router.infra.repository;
 
+import com.krtv.router.infra.rest.ListOpenTasksDto;
 import com.krtv.router.infra.rest.ListTasksDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,5 +22,7 @@ public interface RouterTaskDsGateway {
     void create(CreateRouterTaskDto dto);
 
     Page<ListTasksDto> listAll(Pageable pageable);
+
+    Page<ListOpenTasksDto> listOpenTasks(Pageable pageable);
     
 }

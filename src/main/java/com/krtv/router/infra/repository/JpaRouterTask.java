@@ -5,6 +5,7 @@
  */
 package com.krtv.router.infra.repository;
 
+import com.krtv.router.infra.rest.ListOpenTasksDto;
 import com.krtv.router.infra.rest.ListTasksDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -40,9 +41,12 @@ public class JpaRouterTask implements RouterTaskDsGateway {
 
     @Override
     public Page<ListTasksDto> listAll(Pageable pageable) {
-        System.out.println(routerTaskRepository.findAll(pageable).toList());
+        return routerTaskRepository.findAll(pageable).map(ListTasksDto::converterMapperToDto);
+    }
 
-        return null;
+    @Override
+    public Page<ListOpenTasksDto> listOpenTasks(Pageable pageable) {
+        return routerTaskRepository.findAllByStartedAtIsNull(pageable).map(ListOpenTasksDto::converterMapperToDto);
     }
 
     private void createFieldToTask(String key, String value, RouterTaskDataMapper router) {

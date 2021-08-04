@@ -33,7 +33,7 @@ public class RouterTask {
     }
 
     public String getModel() {
-        return model.name().toLowerCase(Locale.ROOT);
+        return model.name();
     }
 
 }

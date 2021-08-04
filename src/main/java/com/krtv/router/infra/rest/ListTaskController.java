@@ -1,5 +1,6 @@
 package com.krtv.router.infra.rest;
 
+import com.krtv.router.usecase.listopentasks.ListOpenTasksInputBoundary;
 import com.krtv.router.usecase.listtasks.ListTasksInputBoundary;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -16,14 +17,21 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ListTaskController {
 
-    private final ListTasksInputBoundary inputBoundary;
+    private final ListTasksInputBoundary listTasksInputBoundary;
+    private final ListOpenTasksInputBoundary listOpenTasksInputBoundary;
 
     @Operation(description = "List all tasks")
     @GetMapping
     public ResponseEntity<Page<ListTasksDto>> list(Pageable pageable) {
         log.info("List all tasks");
-        System.out.println(inputBoundary.list(pageable));
-        return ResponseEntity.ok(inputBoundary.list(pageable));
+        return ResponseEntity.ok(listTasksInputBoundary.list(pageable));
+    }
+
+    @Operation(description = "List all tasks")
+    @GetMapping("list/open")
+    public ResponseEntity<Page<ListOpenTasksDto>> listOpen(Pageable pageable) {
+        log.info("List all tasks");
+        return ResponseEntity.ok(listOpenTasksInputBoundary.list(pageable));
     }
 
 }

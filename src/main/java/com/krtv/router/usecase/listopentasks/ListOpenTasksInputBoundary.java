@@ -1,12 +1,11 @@
 package com.krtv.router.usecase.listopentasks;
 
+import com.krtv.router.infra.rest.ListOpenTasksDto;
 import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
-
-import java.awt.print.Pageable;
 
 @Component
 public interface ListOpenTasksInputBoundary {
-    ResponseEntity<Page<ListOpenTasksDto>> list(Pageable pageable);
+    Page<ListOpenTasksDto> list(Pageable pageable);
 }
