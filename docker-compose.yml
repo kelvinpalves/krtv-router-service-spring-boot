@@ -11,4 +11,3 @@ services:
             - krtv_data:/var/www/mysql
 volumes:
     krtv_data:
-        

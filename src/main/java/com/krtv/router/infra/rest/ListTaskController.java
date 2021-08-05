@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("router")
+@RequestMapping("router-task")
 @Log4j2
 @RequiredArgsConstructor
 public class ListTaskController {
@@ -27,8 +27,8 @@ public class ListTaskController {
         return ResponseEntity.ok(listTasksInputBoundary.list(pageable));
     }
 
-    @Operation(description = "List all tasks")
-    @GetMapping("list/open")
+    @Operation(description = "List all opened tasks")
+    @GetMapping("only-open")
     public ResponseEntity<Page<ListOpenTasksDto>> listOpen(Pageable pageable) {
         log.info("List all tasks");
         return ResponseEntity.ok(listOpenTasksInputBoundary.list(pageable));

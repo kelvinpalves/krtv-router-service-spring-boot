@@ -7,14 +7,20 @@ package com.krtv.router.infra.repository;
 
 import com.krtv.router.infra.rest.ListOpenTasksDto;
 import com.krtv.router.infra.rest.ListTasksDto;
+import com.krtv.router.infra.scheduled.UpdateRouterDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -47,6 +53,34 @@ public class JpaRouterTask implements RouterTaskDsGateway {
     @Override
     public Page<ListOpenTasksDto> listOpenTasks(Pageable pageable) {
         return routerTaskRepository.findAllByStartedAtIsNull(pageable).map(ListOpenTasksDto::converterMapperToDto);
+    }
+
+    @Override
+    public UpdateRouterDto getNextRouterWaitingForUpdate() throws Exception {
+        Optional<RouterTaskDataMapper> optionalRouterTaskDataMapper = routerTaskRepository
+                .findAll(Sort.by("createdAt"))
+                .stream()
+                .filter(router -> router.getStartedAt() == null)
+                .findFirst();
+
+        if (!optionalRouterTaskDataMapper.isPresent()) {
+            throw new Exception("There is no routers waiting for update.");
+        }
+
+        return UpdateRouterDto.create(optionalRouterTaskDataMapper.get());
+    }
+
+    @Override
+    public Map<String, String> getFieldsFromRouter(String router) {
+        List<RouterTaskFieldDataMapper> list = routerTaskFieldRepository.findAllByRouterId(router);
+
+        return list.stream()
+                .collect(
+                    Collectors.toMap(
+                        RouterTaskFieldDataMapper::getKey,
+                        RouterTaskFieldDataMapper::getValue
+                    )
+                );
     }
 
     private void createFieldToTask(String key, String value, RouterTaskDataMapper router) {

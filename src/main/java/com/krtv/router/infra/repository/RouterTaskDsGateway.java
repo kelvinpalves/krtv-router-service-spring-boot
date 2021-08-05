@@ -7,9 +7,12 @@ package com.krtv.router.infra.repository;
 
 import com.krtv.router.infra.rest.ListOpenTasksDto;
 import com.krtv.router.infra.rest.ListTasksDto;
+import com.krtv.router.infra.scheduled.UpdateRouterDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
+
+import java.util.Map;
 
 /**
  *
@@ -24,5 +27,9 @@ public interface RouterTaskDsGateway {
     Page<ListTasksDto> listAll(Pageable pageable);
 
     Page<ListOpenTasksDto> listOpenTasks(Pageable pageable);
-    
+
+    UpdateRouterDto getNextRouterWaitingForUpdate() throws Exception;
+
+    Map<String, String> getFieldsFromRouter(String router);
+
 }

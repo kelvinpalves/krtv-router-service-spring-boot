@@ -25,7 +25,7 @@ import org.springframework.web.server.ResponseStatusException;
  * @author kelvin
  */
 @RestController
-@RequestMapping("router")
+@RequestMapping("router-task")
 @Log4j2
 @RequiredArgsConstructor
 public class CreateTaskController {
@@ -33,7 +33,7 @@ public class CreateTaskController {
     private final CreateTaskInputBoundary updateRouterInput;
 
     @Operation(description = "Update a list of routers.")
-    @PostMapping("update/start-process")
+    @PostMapping
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Process created"),
         @ApiResponse(responseCode = "406", description = "Not Acceptable! No routers were informed to update.")})
