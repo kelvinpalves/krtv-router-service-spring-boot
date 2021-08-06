@@ -1,5 +1,6 @@
 package com.krtv.router.infra.scheduled;
 
+import com.krtv.router.domain.RouterModel;
 import com.krtv.router.infra.repository.RouterTaskDataMapper;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +12,7 @@ import java.util.Map;
 @Data
 public class UpdateRouterDto {
     private final String router;
-    private final String model;
+    private final RouterModel model;
     private final String url;
     private final Map<String, String> data = new HashMap<>();
 
@@ -22,7 +23,7 @@ public class UpdateRouterDto {
     public static UpdateRouterDto create(RouterTaskDataMapper routerTaskDataMapper) {
         return UpdateRouterDto.builder()
                 .router(routerTaskDataMapper.getId())
-                .model(routerTaskDataMapper.getModel())
+                .model(RouterModel.fromString(routerTaskDataMapper.getModel()))
                 .url(routerTaskDataMapper.getURL())
                 .build();
     }
