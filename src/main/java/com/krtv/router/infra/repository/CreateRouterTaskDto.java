@@ -19,6 +19,8 @@ public class CreateRouterTaskDto {
     private final String protocol;
     private final String context;
     private final String model;
+    private final String username;
+    private final String password;
     private final Map<String, String> data;
 
 }

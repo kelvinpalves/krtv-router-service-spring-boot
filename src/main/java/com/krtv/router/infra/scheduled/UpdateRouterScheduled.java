@@ -9,12 +9,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Map;
 
 @Component
 @Log4j2
 @RequiredArgsConstructor
+@RequestMapping("simulate")
 public class UpdateRouterScheduled implements UpdateRouterCommand {
 
     private static Boolean RUNNING = false;
@@ -24,8 +27,31 @@ public class UpdateRouterScheduled implements UpdateRouterCommand {
 
     private final RouterTaskDsGateway routerTaskDsGateway;
 
+    @GetMapping
+    public String test() {
+        log.info("the scheduled task was invoked");
+
+        UpdateRouterDto updateRouterDto = null;
+
+        try {
+            updateRouterDto = routerTaskDsGateway.getNextRouterWaitingForUpdate();
+            Map<String, String> data = routerTaskDsGateway.getFieldsFromRouter(updateRouterDto.getRouter());
+            data.forEach(updateRouterDto::addData);
+
+            UpdateRouterService service = strategyFactory.findService(updateRouterDto.getModel());
+            service.execute(updateRouterDto);
+
+        }  catch (Exception ex) {
+            log.error("Error to update router: {}", updateRouterDto, ex);
+
+            return "test";
+        }
+
+        return "test";
+    }
+
     @Override
-    @Scheduled(fixedRate = 30000)
+//    @Scheduled(fixedRate = 30000)
     public void execute() {
         if (!ENABLED) return;
         log.info("the scheduled task was invoked");

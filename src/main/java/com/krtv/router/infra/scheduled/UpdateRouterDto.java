@@ -14,6 +14,8 @@ public class UpdateRouterDto {
     private final String router;
     private final RouterModel model;
     private final String url;
+    private final String username;
+    private final String password;
     private final Map<String, String> data = new HashMap<>();
 
     public void addData(String key, String value) {
@@ -23,6 +25,8 @@ public class UpdateRouterDto {
     public static UpdateRouterDto create(RouterTaskDataMapper routerTaskDataMapper) {
         return UpdateRouterDto.builder()
                 .router(routerTaskDataMapper.getId())
+                .username(routerTaskDataMapper.getUsername())
+                .password(routerTaskDataMapper.getPassword())
                 .model(RouterModel.fromString(routerTaskDataMapper.getModel()))
                 .url(routerTaskDataMapper.getURL())
                 .build();

@@ -36,6 +36,8 @@ public class RouterTaskDataMapper implements Serializable {
     private Integer port;
     private String context;
     private String model;
+    private String username;
+    private String password;
     private LocalDateTime createdAt;
     private LocalDateTime startedAt;
     private LocalDateTime finishedAt;

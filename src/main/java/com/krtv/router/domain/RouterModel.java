@@ -13,30 +13,10 @@ import com.krtv.router.infra.selenium.service.UpdateRouterService;
  * @author kelvin
  */
 public enum RouterModel {
-    ZTEH199A {
-        @Override
-        public UpdateRouterService getService() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-    },
-    GWR1200AC {
-        @Override
-        public UpdateRouterService getService() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-    },
-    GWR300N {
-        @Override
-        public UpdateRouterService getService() {
-            return new UpdateRouterServiceGwr300n();
-        }
-    },
-    TENDA {
-        @Override
-        public UpdateRouterService getService() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-    };
+    ZTEH199A,
+    GWR1200AC,
+    GWR300N,
+    TENDA;
 
     public static RouterModel fromString(String model) {
         if (model != null) {
@@ -48,6 +28,4 @@ public enum RouterModel {
         
         throw new IllegalArgumentException("Model is invalid");
     }
-
-    public abstract UpdateRouterService getService();
 }

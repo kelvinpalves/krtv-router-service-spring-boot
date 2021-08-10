@@ -10,6 +10,7 @@ import com.krtv.router.infra.rest.ListTasksDto;
 import com.krtv.router.infra.scheduled.UpdateRouterDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

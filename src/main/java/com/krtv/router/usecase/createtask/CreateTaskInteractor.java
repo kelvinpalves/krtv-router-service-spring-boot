@@ -47,6 +47,8 @@ public class CreateTaskInteractor implements CreateTaskInputBoundary {
                     .port(routerTask.getPort())
                     .context(routerTask.getContext())
                     .model(routerTask.getModel())
+                    .username(router.getUsername())
+                    .password(router.getPassword())
                     .data(routerTask.getData())
                     .build();
 

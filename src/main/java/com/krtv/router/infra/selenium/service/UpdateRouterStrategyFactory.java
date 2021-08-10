@@ -10,7 +10,6 @@ import java.util.Set;
 
 @Component
 public class UpdateRouterStrategyFactory {
-
     private Map<RouterModel, UpdateRouterService> services;
 
     @Autowired
@@ -21,11 +20,11 @@ public class UpdateRouterStrategyFactory {
     public UpdateRouterService findService(RouterModel model) {
         return services.get(model);
     }
+
     private void createService(Set<UpdateRouterService> serviceSet) {
         services = new HashMap<>();
         serviceSet.forEach(
                 service -> services.put(service.getRouterModel(), service));
     }
-
-
 }
+
