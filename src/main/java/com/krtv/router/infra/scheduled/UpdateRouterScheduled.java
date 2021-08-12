@@ -3,6 +3,7 @@ package com.krtv.router.infra.scheduled;
 import com.krtv.router.domain.RouterModel;
 import com.krtv.router.infra.repository.RouterTaskDataMapper;
 import com.krtv.router.infra.repository.RouterTaskDsGateway;
+import com.krtv.router.infra.selenium.service.UpdateFieldStrategyFactory;
 import com.krtv.router.infra.selenium.service.UpdateRouterService;
 import com.krtv.router.infra.selenium.service.UpdateRouterStrategyFactory;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class UpdateRouterScheduled implements UpdateRouterCommand {
     private static Boolean ENABLED = true;
 
     private final UpdateRouterStrategyFactory strategyFactory;
+    private final UpdateFieldStrategyFactory updateFieldStrategyFactory;
 
     private final RouterTaskDsGateway routerTaskDsGateway;
 
@@ -39,7 +41,7 @@ public class UpdateRouterScheduled implements UpdateRouterCommand {
             data.forEach(updateRouterDto::addData);
 
             UpdateRouterService service = strategyFactory.findService(updateRouterDto.getModel());
-            service.execute(updateRouterDto);
+            service.execute(updateRouterDto, updateFieldStrategyFactory);
 
         }  catch (Exception ex) {
             log.error("Error to update router: {}", updateRouterDto, ex);
@@ -64,7 +66,7 @@ public class UpdateRouterScheduled implements UpdateRouterCommand {
             data.forEach(updateRouterDto::addData);
 
             UpdateRouterService service = strategyFactory.findService(updateRouterDto.getModel());
-            service.execute(updateRouterDto);
+            service.execute(updateRouterDto, updateFieldStrategyFactory);
 
         }  catch (Exception ex) {
             log.error("Error to update router: {}", updateRouterDto, ex);

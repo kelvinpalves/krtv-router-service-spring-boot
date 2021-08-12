@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public interface UpdateRouterService {
 
-    void execute(UpdateRouterDto updateRouterDto);
+    void execute(UpdateRouterDto updateRouterDto, UpdateFieldStrategyFactory updateFieldStrategyFactory);
 
     RouterModel getRouterModel();
 

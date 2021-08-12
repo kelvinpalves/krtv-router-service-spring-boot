@@ -4,10 +4,11 @@ import com.krtv.router.domain.RouterModel;
 import com.krtv.router.infra.selenium.service.FieldType;
 
 public enum FieldsGwr1200ac {
-    PASSWORD("password", FieldType.NAME),
-    ON_OFF("autoexec", FieldType.CSS),
-    URL("url", FieldType.NAME),
-    USERNAME("username", FieldType.NAME);
+    PASSWORD("password", FieldType.INPUT_TEXT_BY_NAME),
+    ON_OFF("autoexec", FieldType.RADIO_BUTTON_BY_NAME),
+    URL("url", FieldType.INPUT_TEXT_BY_NAME),
+    USERNAME("username", FieldType.INPUT_TEXT_BY_NAME),
+    SAVE_AND_APPLY("save_apply", FieldType.BUTTON_CLICK);
 
     private final String id;
     private final FieldType type;
