@@ -86,7 +86,7 @@ public class JpaRouterTask implements RouterTaskDsGateway {
         Optional<RouterTaskDataMapper> optionalRouterTaskDataMapper = routerTaskRepository
                 .findAll(Sort.by("createdAt"))
                 .stream()
-                .filter(router -> router.getStartedAt() == null)
+                .filter(this::canExecute)
                 .findFirst();
 
         if (!optionalRouterTaskDataMapper.isPresent()) {
@@ -94,6 +94,11 @@ public class JpaRouterTask implements RouterTaskDsGateway {
         }
 
         return UpdateRouterDto.create(optionalRouterTaskDataMapper.get());
+    }
+
+    private boolean canExecute(RouterTaskDataMapper router) {
+        return router.getCurrentStatus().equals(RouterStatus.CREATED.toString())
+                || router.getCurrentStatus().equals(RouterStatus.ERROR.toString());
     }
 
     @Override
