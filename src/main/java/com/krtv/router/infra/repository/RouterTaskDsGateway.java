@@ -5,6 +5,7 @@
  */
 package com.krtv.router.infra.repository;
 
+import com.krtv.router.domain.RouterStatus;
 import com.krtv.router.infra.rest.ListOpenTasksDto;
 import com.krtv.router.infra.rest.ListTasksDto;
 import com.krtv.router.infra.scheduled.UpdateRouterDto;
@@ -23,6 +24,10 @@ import java.util.Map;
 public interface RouterTaskDsGateway {
     
     void create(CreateRouterTaskDto dto);
+
+    void setStartedTime(String router);
+
+    void updateStatus(String router, RouterStatus status);
 
     Page<ListTasksDto> listAll(Pageable pageable);
 

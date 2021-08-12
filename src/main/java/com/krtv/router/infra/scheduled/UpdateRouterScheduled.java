@@ -1,6 +1,7 @@
 package com.krtv.router.infra.scheduled;
 
 import com.krtv.router.domain.RouterModel;
+import com.krtv.router.domain.RouterStatus;
 import com.krtv.router.infra.repository.RouterTaskDataMapper;
 import com.krtv.router.infra.repository.RouterTaskDsGateway;
 import com.krtv.router.infra.selenium.service.UpdateFieldStrategyFactory;
@@ -31,25 +32,9 @@ public class UpdateRouterScheduled implements UpdateRouterCommand {
 
     @GetMapping
     public String test() {
-        log.info("the scheduled task was invoked");
-
-        UpdateRouterDto updateRouterDto = null;
-
-        try {
-            updateRouterDto = routerTaskDsGateway.getNextRouterWaitingForUpdate();
-            Map<String, String> data = routerTaskDsGateway.getFieldsFromRouter(updateRouterDto.getRouter());
-            data.forEach(updateRouterDto::addData);
-
-            UpdateRouterService service = strategyFactory.findService(updateRouterDto.getModel());
-            service.execute(updateRouterDto, updateFieldStrategyFactory);
-
-        }  catch (Exception ex) {
-            log.error("Error to update router: {}", updateRouterDto, ex);
-
-            return "test";
-        }
-
-        return "test";
+        log.info("the scheduled task was invoked by simulate");
+        this.execute();
+        return "";
     }
 
     @Override
@@ -62,15 +47,27 @@ public class UpdateRouterScheduled implements UpdateRouterCommand {
 
         try {
             updateRouterDto = routerTaskDsGateway.getNextRouterWaitingForUpdate();
+
+            routerTaskDsGateway.setStartedTime(updateRouterDto.getRouter());
+
             Map<String, String> data = routerTaskDsGateway.getFieldsFromRouter(updateRouterDto.getRouter());
             data.forEach(updateRouterDto::addData);
 
             UpdateRouterService service = strategyFactory.findService(updateRouterDto.getModel());
             service.execute(updateRouterDto, updateFieldStrategyFactory);
-
+            this.updateStatus(updateRouterDto.getRouter(), RouterStatus.EXECUTED);
         }  catch (Exception ex) {
             log.error("Error to update router: {}", updateRouterDto, ex);
+
+            String router = updateRouterDto == null ? null : updateRouterDto.getRouter();
+            this.updateStatus(router, RouterStatus.ERROR);
         }
 
+    }
+
+    private void updateStatus(String router, RouterStatus status) {
+        if (router != null) {
+            routerTaskDsGateway.updateStatus(router, status);
+        }
     }
 }

@@ -38,6 +38,7 @@ public class RouterTaskDataMapper implements Serializable {
     private String model;
     private String username;
     private String password;
+    private String currentStatus;
     private LocalDateTime createdAt;
     private LocalDateTime startedAt;
     private LocalDateTime finishedAt;
@@ -53,5 +54,6 @@ public class RouterTaskDataMapper implements Serializable {
                 .append(context);
         return url.toString();
     }
+
 
 }

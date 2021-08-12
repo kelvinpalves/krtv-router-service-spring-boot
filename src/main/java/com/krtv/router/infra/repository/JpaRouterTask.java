@@ -5,6 +5,7 @@
  */
 package com.krtv.router.infra.repository;
 
+import com.krtv.router.domain.RouterStatus;
 import com.krtv.router.infra.rest.ListOpenTasksDto;
 import com.krtv.router.infra.rest.ListTasksDto;
 import com.krtv.router.infra.scheduled.UpdateRouterDto;
@@ -42,8 +43,32 @@ public class JpaRouterTask implements RouterTaskDsGateway {
     public void create(CreateRouterTaskDto dto) {
         RouterTaskDataMapper entity = commonMapper.createRouterTaskDtoToRouterTaskDataMapper(dto);
         entity.setCreatedAt(LocalDateTime.now());
+        entity.setCurrentStatus(RouterStatus.CREATED.toString());
         RouterTaskDataMapper finalEntity = routerTaskRepository.save(entity);;
         dto.getData().forEach((key, value) -> createFieldToTask(key, value, finalEntity));
+    }
+
+    @Override
+    public void setStartedTime(String router) {
+        Optional<RouterTaskDataMapper> routerTaskDataMapper = routerTaskRepository.findById(router);
+
+        if (routerTaskDataMapper.isPresent()) {
+            RouterTaskDataMapper model = routerTaskDataMapper.get();
+            model.setStartedAt(LocalDateTime.now());
+            routerTaskRepository.saveAndFlush(model);
+        }
+    }
+
+    @Override
+    public void updateStatus(String router, RouterStatus status) {
+        Optional<RouterTaskDataMapper> routerTaskDataMapper = routerTaskRepository.findById(router);
+
+        if (routerTaskDataMapper.isPresent()) {
+            RouterTaskDataMapper model = routerTaskDataMapper.get();
+            model.setCurrentStatus(status.toString());
+            model.setFinishedAt(LocalDateTime.now());
+            routerTaskRepository.saveAndFlush(model);
+        }
     }
 
     @Override
