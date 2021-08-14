@@ -1,7 +1,6 @@
 package com.krtv.router.infra.selenium.gwr1200ac;
 
-import com.krtv.router.domain.RouterModel;
-import com.krtv.router.infra.selenium.service.FieldType;
+import com.krtv.router.infra.selenium.service.fields.FieldType;
 
 public enum FieldsGwr1200ac {
     PASSWORD("password", FieldType.INPUT_TEXT_BY_NAME),

@@ -1,4 +1,4 @@
-package com.krtv.router.infra.selenium.service;
+package com.krtv.router.infra.selenium.service.router;
 
 import lombok.experimental.SuperBuilder;
 import lombok.extern.log4j.Log4j2;
@@ -18,7 +18,7 @@ public class PageObject {
     protected String url;
     protected String urlBaseWithCredentials;
 
-    public PageObject(WebDriver browser) {
+    protected void start(WebDriver browser) {
         defineArguments();
 
         this.browser = browser == null

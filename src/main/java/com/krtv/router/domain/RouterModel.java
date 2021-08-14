@@ -5,9 +5,6 @@
  */
 package com.krtv.router.domain;
 
-import com.krtv.router.infra.selenium.gwr300n.UpdateRouterServiceGwr300n;
-import com.krtv.router.infra.selenium.service.UpdateRouterService;
-
 /**
  *
  * @author kelvin

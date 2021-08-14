@@ -1,4 +1,4 @@
-package com.krtv.router.infra.selenium.service;
+package com.krtv.router.infra.selenium.service.router;
 
 import com.krtv.router.domain.RouterModel;
 import org.springframework.beans.factory.annotation.Autowired;

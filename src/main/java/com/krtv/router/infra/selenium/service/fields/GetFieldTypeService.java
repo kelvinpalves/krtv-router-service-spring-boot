@@ -1,12 +1,8 @@
-package com.krtv.router.infra.selenium.service;
+package com.krtv.router.infra.selenium.service.fields;
 
 import org.springframework.stereotype.Component;
 
 @Component
-public interface UpdateFieldService {
-
+public interface GetFieldTypeService {
     FieldType getFieldType();
-
 }
-
-

@@ -1,4 +1,4 @@
-package com.krtv.router.infra.selenium.service;
+package com.krtv.router.infra.selenium.service.fields;
 
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;

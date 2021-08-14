@@ -1,4 +1,4 @@
-package com.krtv.router.infra.selenium.service;
+package com.krtv.router.infra.selenium.service.fields;
 
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Log4j2
 @Component
-public class UpdateFieldServiceCssType implements InputDataService {
+public class UpdateFieldServiceCssType implements UpdateFieldService, InputDataService {
     @Override
     public void execute(WebDriver browser, String key, String value) {
         browser.findElements(By.cssSelector("input[name=" + key + "]")).stream().forEach(webElement -> {
