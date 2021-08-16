@@ -1,8 +1,6 @@
 package com.krtv.router.infra.selenium.service.router;
 
-import lombok.experimental.SuperBuilder;
 import lombok.extern.log4j.Log4j2;
-import net.bytebuddy.implementation.bind.annotation.Super;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -11,7 +9,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.concurrent.TimeUnit;
 
 @Log4j2
-public class PageObject {
+public abstract class PageObject {
 
     private ChromeOptions options;
     protected WebDriver browser;
@@ -57,7 +55,7 @@ public class PageObject {
                 .manage()
                 .timeouts()
                 .implicitlyWait(30, TimeUnit.SECONDS)
-                .pageLoadTimeout(10, TimeUnit.SECONDS);
+                .pageLoadTimeout(30, TimeUnit.SECONDS);
     }
 
     public void  close() {
@@ -65,7 +63,5 @@ public class PageObject {
         this.browser.quit();
 
     }
-
-
 
 }

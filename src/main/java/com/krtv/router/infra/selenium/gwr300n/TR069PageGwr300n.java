@@ -1,6 +1,6 @@
-package com.krtv.router.infra.selenium.gwr1200ac;
+package com.krtv.router.infra.selenium.gwr300n;
 
-import com.krtv.router.infra.selenium.gwr300n.FieldsGwr300n;
+import com.krtv.router.infra.selenium.gwr1200ac.FieldsGwr1200ac;
 import com.krtv.router.infra.selenium.service.fields.ButtonClickService;
 import com.krtv.router.infra.selenium.service.fields.InputDataService;
 import com.krtv.router.infra.selenium.service.fields.UpdateFieldService;
@@ -16,9 +16,9 @@ import java.util.Map;
 @Log4j2
 @Component
 @RequiredArgsConstructor
-public class TR069PageGwr1200ac extends PageObject {
+public class TR069PageGwr300n extends PageObject {
 
-    private final UpdateFieldStrategyFactory updateFieldStrategyFactory;
+    protected final UpdateFieldStrategyFactory updateFieldStrategyFactory;
 
     public void load(WebDriver browser, String url, String urlWithCredentials) {
         this.start(browser);
@@ -31,7 +31,7 @@ public class TR069PageGwr1200ac extends PageObject {
     public void execute(Map<String, String> data) throws Exception {
         try {
             data.forEach(this::executeField);
-            FieldsGwr1200ac button = FieldsGwr1200ac.SAVE_AND_APPLY;
+            FieldsGwr300n button = FieldsGwr300n.SAVE_AND_APPLY;
             ButtonClickService buttonClickService = (ButtonClickService) updateFieldStrategyFactory.findService(button.getType());
             buttonClickService.execute(browser, button.getId());
         } catch (Exception ex) {
@@ -43,7 +43,7 @@ public class TR069PageGwr1200ac extends PageObject {
     private void executeField(String field, String value) {
         try {
             log.info("field: {}, new value: {}", FieldsGwr1200ac.fromString(field).getId(), value);
-            FieldsGwr1200ac current = FieldsGwr1200ac.fromString(field);
+            FieldsGwr300n current = FieldsGwr300n.fromString(field);
 
             InputDataService inputDataService = (InputDataService) updateFieldStrategyFactory.findService(current.getType());
             inputDataService.execute(browser, current.getId(), value);

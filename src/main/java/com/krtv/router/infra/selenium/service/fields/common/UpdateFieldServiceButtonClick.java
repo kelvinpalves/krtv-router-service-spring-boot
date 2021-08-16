@@ -1,5 +1,6 @@
-package com.krtv.router.infra.selenium.service.fields;
+package com.krtv.router.infra.selenium.service.fields.common;
 
+import com.krtv.router.infra.selenium.service.fields.ButtonClickService;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

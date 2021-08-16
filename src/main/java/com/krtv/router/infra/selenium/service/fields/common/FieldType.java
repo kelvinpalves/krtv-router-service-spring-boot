@@ -1,4 +1,4 @@
-package com.krtv.router.infra.selenium.service.fields;
+package com.krtv.router.infra.selenium.service.fields.common;
 
 public enum FieldType {
     ID,

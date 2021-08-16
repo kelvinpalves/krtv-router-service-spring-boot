@@ -1,27 +1,27 @@
-package com.krtv.router.infra.selenium.gwr1200ac;
+package com.krtv.router.infra.selenium.gwr300n;
 
 import com.krtv.router.infra.selenium.service.fields.common.FieldType;
 
-public enum FieldsGwr1200ac {
+public enum FieldsGwr300n {
     PASSWORD("password", FieldType.INPUT_TEXT_BY_NAME),
     ON_OFF("autoexec", FieldType.RADIO_BUTTON_BY_NAME),
     URL("url", FieldType.INPUT_TEXT_BY_NAME),
     USERNAME("username", FieldType.INPUT_TEXT_BY_NAME),
-    SAVE_AND_APPLY("save_apply", FieldType.BUTTON_CLICK);
+    SAVE_AND_APPLY("save", FieldType.BUTTON_CLICK);
 
     private final String id;
     private final FieldType type;
 
-    FieldsGwr1200ac(String id, FieldType type) {
+    FieldsGwr300n(String id, FieldType type) {
         this.id = id;
         this.type = type;
     }
 
-    public static FieldsGwr1200ac fromString(String model) {
+    public static FieldsGwr300n fromString(String model) {
         if (model != null) {
-            for (FieldsGwr1200ac fieldsGwr1200ac : FieldsGwr1200ac.values()) {
-                if (fieldsGwr1200ac.name().equals(model))
-                    return fieldsGwr1200ac;
+            for (FieldsGwr300n fieldsGwr300n : FieldsGwr300n.values()) {
+                if (fieldsGwr300n.name().equals(model))
+                    return fieldsGwr300n;
             }
         }
 

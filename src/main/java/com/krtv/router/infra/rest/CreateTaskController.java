@@ -32,11 +32,13 @@ public class CreateTaskController {
     
     private final CreateTaskInputBoundary updateRouterInput;
 
-    @Operation(description = "Update a list of routers.")
+    @Operation(description = "Para cada roteador enviado na lista como entrada," +
+            "uma tarefa será criada no sistema. Um serviço vai buscar as tarefas em aberto e executá-las uma após a outra. " +
+            "Conforme as tarefas forem executadas, informações de início de execução e fim são gravadas para posterior consulta.", summary = "Agendar atualização para lista de roteadores", tags = "Atualização Roteador")
     @PostMapping
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "Process created"),
-        @ApiResponse(responseCode = "406", description = "Not Acceptable! No routers were informed to update.")})
+        @ApiResponse(responseCode = "201", description = "Tarefa agendada com sucesso."),
+        @ApiResponse(responseCode = "406", description = "Nenhuma tarefa foi criada, não há roteadores informados.")})
     @ResponseStatus(HttpStatus.CREATED)
     public CreateTaskResponseModel startProcess(@Valid @RequestBody CreateTaskRequestModel dto) {
         log.info("Process created!");

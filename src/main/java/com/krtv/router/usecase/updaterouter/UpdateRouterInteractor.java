@@ -31,6 +31,7 @@ public class UpdateRouterInteractor implements UpdateRouterInputBoundary {
             data.forEach(updateRouterDto::addData);
 
             UpdateRouterService service = strategyFactory.findService(updateRouterDto.getModel());
+            
             service.execute(updateRouterDto);
 
             this.updateStatus(updateRouterDto.getRouter(), RouterStatus.EXECUTED);
