@@ -8,15 +8,16 @@ import org.springframework.stereotype.Component;
 
 @Log4j2
 @Component
-public class UpdateFieldServiceButtonClick implements ButtonClickService {
+public class UpdateFieldServiceClickById implements ButtonClickService {
 
     @Override
     public void execute(WebDriver browser, String key) {
-        browser.findElement(By.name(key)).click();
+        log.info("Click by ID was called. Key: {}", key);
+        browser.findElement(By.id(key)).click();
     }
 
     @Override
     public FieldType getFieldType() {
-        return FieldType.BUTTON_CLICK;
+        return FieldType.BUTTON_CLICK_BY_ID;
     }
 }

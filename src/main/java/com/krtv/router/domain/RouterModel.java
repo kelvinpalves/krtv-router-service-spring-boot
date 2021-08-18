@@ -10,10 +10,9 @@ package com.krtv.router.domain;
  * @author kelvin
  */
 public enum RouterModel {
-    ZTEH199A,
+    ZXHNH198A,
     GWR1200AC,
-    GWR300N,
-    TENDA;
+    GWR300N;
 
     public static RouterModel fromString(String model) {
         if (model != null) {

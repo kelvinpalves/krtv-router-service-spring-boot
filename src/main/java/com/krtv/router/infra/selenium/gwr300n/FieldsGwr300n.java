@@ -7,7 +7,7 @@ public enum FieldsGwr300n {
     ON_OFF("autoexec", FieldType.RADIO_BUTTON_BY_NAME),
     URL("url", FieldType.INPUT_TEXT_BY_NAME),
     USERNAME("username", FieldType.INPUT_TEXT_BY_NAME),
-    SAVE_AND_APPLY("save", FieldType.BUTTON_CLICK);
+    SAVE_AND_APPLY("save", FieldType.BUTTON_CLICK_BY_NAME);
 
     private final String id;
     private final FieldType type;
