@@ -1,7 +1,7 @@
 package com.krtv.router.usecase.createtask;
 
 
-import com.krtv.router.domain.RouterTask;
+import com.krtv.router.domain.RouterTasks;
 import com.krtv.router.domain.RouterTaskMapper;
 import com.krtv.router.infra.repository.CreateRouterTaskDto;
 import com.krtv.router.infra.repository.RouterTaskDsGateway;
@@ -29,7 +29,7 @@ import org.springframework.stereotype.Component;
 public class CreateTaskInteractor implements CreateTaskInputBoundary {
 
     private final RouterTaskDsGateway routerTaskDsGateway;
-    
+
     @Override
     public CreateTaskResponseModel startProcess(CreateTaskRequestModel requestModel) {
         requestModel.getRouters().stream().forEach(this::addRouterToWaitList);
@@ -38,7 +38,7 @@ public class CreateTaskInteractor implements CreateTaskInputBoundary {
     
     private void addRouterToWaitList(CreateTaskDto router) {
         try {
-            RouterTask routerTask = RouterTaskMapper.toRouterTask(router);
+            RouterTasks routerTask = RouterTaskMapper.toRouterTask(router);
             log.info("Adding {} to wait list.", routerTask);
 
             CreateRouterTaskDto createRouterTaskDto = CreateRouterTaskDto.builder()

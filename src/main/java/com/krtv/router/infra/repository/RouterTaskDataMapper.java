@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  *
@@ -42,6 +43,8 @@ public class RouterTaskDataMapper implements Serializable {
     private LocalDateTime createdAt;
     private LocalDateTime startedAt;
     private LocalDateTime finishedAt;
+    private Integer tries = 0;
+    private Boolean expired = Boolean.FALSE;
 
     public String getURL() {
         StringBuilder url = new StringBuilder();
@@ -53,6 +56,10 @@ public class RouterTaskDataMapper implements Serializable {
                 .append("/")
                 .append(context);
         return url.toString();
+    }
+
+    public boolean numberOfTriesExceededMaximumAllowed(Integer maximumNumberTries) {
+        return tries >= maximumNumberTries;
     }
 
 

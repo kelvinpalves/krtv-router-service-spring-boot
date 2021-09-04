@@ -35,13 +35,28 @@ public class UpdateRouterInteractor implements UpdateRouterInputBoundary {
             service.execute(updateRouterDto);
 
             this.updateStatus(updateRouterDto.getRouter(), RouterStatus.EXECUTED);
+            this.updateNumberOfTries(updateRouterDto.getRouter());
+            this.setTaskToExpired(updateRouterDto.getRouter());
         }  catch (Exception ex) {
             log.error("Error to update router: {}", updateRouterDto);
 
             String router = updateRouterDto == null ? null : updateRouterDto.getRouter();
             this.updateStatus(router, RouterStatus.ERROR);
+            this.updateNumberOfTries(router);
 
             throw ex;
+        }
+    }
+
+    private void setTaskToExpired(String router) {
+        if (router != null) {
+            routerTaskDsGateway.setTaskToExpired(router);
+        }
+    }
+
+    private void updateNumberOfTries(String router) {
+        if (router != null) {
+            routerTaskDsGateway.updateNumberOfExecutedTries(router);
         }
     }
 

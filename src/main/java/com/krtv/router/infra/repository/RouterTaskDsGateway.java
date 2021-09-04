@@ -29,6 +29,8 @@ public interface RouterTaskDsGateway {
 
     void updateStatus(String router, RouterStatus status);
 
+    void updateNumberOfExecutedTries(String router);
+
     Page<ListTasksDto> listAll(Pageable pageable);
 
     Page<ListOpenTasksDto> listOpenTasks(Pageable pageable);
@@ -37,4 +39,5 @@ public interface RouterTaskDsGateway {
 
     Map<String, String> getFieldsFromRouter(String router);
 
+    void setTaskToExpired(String router);
 }

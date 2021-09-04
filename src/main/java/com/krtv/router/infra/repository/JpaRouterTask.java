@@ -10,8 +10,10 @@ import com.krtv.router.infra.rest.ListOpenTasksDto;
 import com.krtv.router.infra.rest.ListTasksDto;
 import com.krtv.router.infra.scheduled.UpdateRouterDto;
 import lombok.RequiredArgsConstructor;
+
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -37,6 +39,9 @@ public class JpaRouterTask implements RouterTaskDsGateway {
     private final JpaRouterTaskRepository routerTaskRepository;
     private final JpaRouterTaskFieldRepository routerTaskFieldRepository;
     private final CommonMapper commonMapper;
+
+    @Value("${config.maximumNumberTries}")
+    private Integer maximumNumberTries;
 
     @Override
     @Transactional
@@ -72,6 +77,22 @@ public class JpaRouterTask implements RouterTaskDsGateway {
     }
 
     @Override
+    public void updateNumberOfExecutedTries(String router) {
+        Optional<RouterTaskDataMapper> routerTaskDataMapper = routerTaskRepository.findById(router);
+
+        if (routerTaskDataMapper.isPresent()) {
+            RouterTaskDataMapper model = routerTaskDataMapper.get();
+            model.setTries(model.getTries() + 1);
+
+            if (model.numberOfTriesExceededMaximumAllowed(maximumNumberTries)) {
+                model.setExpired(Boolean.TRUE);
+            }
+
+            routerTaskRepository.saveAndFlush(model);
+        }
+    }
+
+    @Override
     public Page<ListTasksDto> listAll(Pageable pageable) {
         return routerTaskRepository.findAll(pageable).map(ListTasksDto::converterMapperToDto);
     }
@@ -97,8 +118,15 @@ public class JpaRouterTask implements RouterTaskDsGateway {
     }
 
     private boolean canExecute(RouterTaskDataMapper router) {
-        return router.getCurrentStatus().equals(RouterStatus.CREATED.toString())
+        boolean statusValid = router.getCurrentStatus().equals(RouterStatus.CREATED.toString())
                 || router.getCurrentStatus().equals(RouterStatus.ERROR.toString());
+
+        boolean numberOfTriesIsNotExceeded = !router.numberOfTriesExceededMaximumAllowed(maximumNumberTries);
+        boolean notExpired = !router.getExpired();
+
+        return statusValid
+                && numberOfTriesIsNotExceeded
+                && notExpired;
     }
 
     @Override
@@ -112,6 +140,17 @@ public class JpaRouterTask implements RouterTaskDsGateway {
                         RouterTaskFieldDataMapper::getValue
                     )
                 );
+    }
+
+    @Override
+    public void setTaskToExpired(String router) {
+        Optional<RouterTaskDataMapper> routerTaskDataMapper = routerTaskRepository.findById(router);
+
+        if (routerTaskDataMapper.isPresent()) {
+            RouterTaskDataMapper model = routerTaskDataMapper.get();
+            model.setExpired(Boolean.TRUE);
+            routerTaskRepository.saveAndFlush(model);
+        }
     }
 
     private void createFieldToTask(String key, String value, RouterTaskDataMapper router) {

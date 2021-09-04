@@ -1,13 +1,9 @@
 package com.krtv.router.infra.rest;
 
 import com.krtv.router.infra.repository.RouterTaskDataMapper;
-import com.krtv.utils.DataUtils;
+import com.krtv.utils.DateUtils;
 import lombok.Builder;
 import lombok.Data;
-
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.function.Function;
 
 @Data
 @Builder
@@ -24,9 +20,9 @@ public class ListTasksDto {
                 .id(mapper.getId())
                 .url(mapper.getURL())
                 .model(mapper.getModel())
-                .createdAt(DataUtils.localDateTimeToStringDate(mapper.getCreatedAt()))
-                .startedAt(DataUtils.localDateTimeToStringDate(mapper.getStartedAt()))
-                .finishedAt(DataUtils.localDateTimeToStringDate(mapper.getFinishedAt()))
+                .createdAt(DateUtils.localDateTimeToStringDate(mapper.getCreatedAt()))
+                .startedAt(DateUtils.localDateTimeToStringDate(mapper.getStartedAt()))
+                .finishedAt(DateUtils.localDateTimeToStringDate(mapper.getFinishedAt()))
                 .build();
     }
 }

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface JpaRouterTaskRepository extends JpaRepository<RouterTaskDataMapper, String>{
+public interface JpaRouterTaskRepository extends JpaRepository<RouterTaskDataMapper, String> {
 
         Page<RouterTaskDataMapper> findAllByStartedAtIsNull(Pageable pageable);
 

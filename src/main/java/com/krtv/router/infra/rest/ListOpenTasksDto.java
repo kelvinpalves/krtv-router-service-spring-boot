@@ -1,7 +1,7 @@
 package com.krtv.router.infra.rest;
 
 import com.krtv.router.infra.repository.RouterTaskDataMapper;
-import com.krtv.utils.DataUtils;
+import com.krtv.utils.DateUtils;
 import lombok.Builder;
 import lombok.Data;
 
@@ -18,7 +18,7 @@ public class ListOpenTasksDto {
                 .id(mapper.getId())
                 .url(mapper.getURL())
                 .model(mapper.getModel())
-                .createdAt(DataUtils.localDateTimeToStringDate(mapper.getCreatedAt()))
+                .createdAt(DateUtils.localDateTimeToStringDate(mapper.getCreatedAt()))
                 .build();
     }
 }

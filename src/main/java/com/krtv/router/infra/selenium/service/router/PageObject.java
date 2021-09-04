@@ -4,6 +4,7 @@ import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.concurrent.TimeUnit;
@@ -15,6 +16,9 @@ public abstract class PageObject {
     protected WebDriver browser;
     protected String url;
     protected String urlBaseWithCredentials;
+
+    @Value("${config.pathWebDriver}")
+    private String pathWebDriver;
 
     protected void start(WebDriver browser) {
         defineArguments();
@@ -44,10 +48,10 @@ public abstract class PageObject {
     }
 
     public final void defineArguments() {
-        System.setProperty("webdriver.chrome.driver", "drivers/chromedriver");
+        System.setProperty("webdriver.chrome.driver", this.pathWebDriver);
         options = new ChromeOptions();
         options.addArguments("--disable-blink-features=\"BlockCredentialedSubresources\"");
-//        options.addArguments("--headless");
+        options.addArguments("--headless");
     }
 
     public final void configure() {

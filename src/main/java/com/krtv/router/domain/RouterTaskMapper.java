@@ -14,8 +14,8 @@ import com.krtv.router.infra.rest.CreateTaskDto;
 
 public abstract class RouterTaskMapper {
 
-    public static RouterTask toRouterTask(CreateTaskDto dto) {
-        return RouterTask.builder()
+    public static RouterTasks toRouterTask(CreateTaskDto dto) {
+        return RouterTasks.builder()
                 .ip(dto.getIp())
                 .port(dto.getPort())
                 .protocol(Protocol.fromString(dto.getProtocol()))

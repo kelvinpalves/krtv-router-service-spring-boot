@@ -2,8 +2,6 @@ package com.krtv.router.infra.selenium.gwr300n;
 
 import com.krtv.router.domain.RouterModel;
 import com.krtv.router.infra.scheduled.UpdateRouterDto;
-import com.krtv.router.infra.selenium.gwr1200ac.LoginPageGwr1200ac;
-import com.krtv.router.infra.selenium.gwr1200ac.TR069PageGwr1200ac;
 import com.krtv.router.infra.selenium.service.router.UpdateRouterService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
