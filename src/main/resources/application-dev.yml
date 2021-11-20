@@ -3,10 +3,10 @@ server:
     include-stacktrace: on_param
 
 config:
-  maximumNumberTries: 1
+  maximumNumberTries: 5
   pathWebDriver: /home/kelvin/Documents/Pessoal/KRTV/drivers/chromedriver
   timeout: 60
-  enableHeadless: false,
+  enableHeadless: true
   sleepStep: 3000
 
 spring:

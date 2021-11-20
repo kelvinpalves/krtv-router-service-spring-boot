@@ -94,7 +94,14 @@ public class JpaRouterTask implements RouterTaskDsGateway {
 
     @Override
     public Page<ListTasksDto> listAll(Pageable pageable) {
-        return routerTaskRepository.findAll(pageable).map(ListTasksDto::converterMapperToDto);
+        Page<ListTasksDto> list = routerTaskRepository.findAll(pageable).map(ListTasksDto::converterMapperToDto);
+
+        list.getContent().stream().forEach(task -> {
+            Map<String, String> data = getFieldsFromRouter(task.getId());
+            task.getData().putAll(data);
+        });
+
+        return list;
     }
 
     @Override
