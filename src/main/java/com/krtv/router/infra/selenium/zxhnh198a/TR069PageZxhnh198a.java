@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Log4j2
 @Component
@@ -22,9 +23,12 @@ public class TR069PageZxhnh198a extends PageObject {
     private final static boolean FIRST_FORM = true;
     private final static boolean SECOND_FORM = false;
 
-    public void load(WebDriver browser, String url) {
+    public void load(WebDriver browser, String url) throws Exception {
         this.start(browser);
         this.url = url;
+        log.info("Waiting load page");
+        Thread.sleep(this.sleepStep);
+
         FieldsZxhnh198a button = FieldsZxhnh198a.MANAGEMENT_AND_DIAGNOSIS;
         ButtonClickService management = (ButtonClickService) updateFieldStrategyFactory.findService(button.getType());
         management.execute(this.browser, button.getId());
@@ -36,6 +40,14 @@ public class TR069PageZxhnh198a extends PageObject {
 
     public void execute(Map<String, String> data) throws Exception {
         try {
+            log.info("Waiting load page");
+            Thread.sleep(this.sleepStep);
+
+            log.info("Setting basic configuration fields. Fields={}",
+                    data.entrySet().stream()
+                            .filter(map -> FieldsZxhnh198a.valueOf(map.getKey()).isFirstPhase())
+                            .collect(Collectors.toMap(Map.Entry::getKey, map -> map.getValue())));
+
             data.forEach((field, value) -> {
                 this.executeField(field, value, FIRST_FORM);
             });
@@ -43,7 +55,7 @@ public class TR069PageZxhnh198a extends PageObject {
             FieldsZxhnh198a button = FieldsZxhnh198a.APPLY;
             ButtonClickService buttonClickService = (ButtonClickService) updateFieldStrategyFactory.findService(button.getType());
             buttonClickService.execute(browser, button.getId());
-            Thread.sleep(3000);
+            Thread.sleep(this.sleepStep);
 
             log.info("Basic configuration updated. Date={}", LocalDateTime.now());
             log.info("Closing basic configuration");
@@ -52,7 +64,7 @@ public class TR069PageZxhnh198a extends PageObject {
             ButtonClickService basicConfigurationCollapseButton = (ButtonClickService) updateFieldStrategyFactory.findService(basicConfigurationCollapse.getType());
             basicConfigurationCollapseButton.execute(this.browser, basicConfigurationCollapse.getId());
 
-            Thread.sleep(3000);
+            Thread.sleep(this.sleepStep);
 
             log.info("Opening stun configuration");
 
@@ -60,13 +72,23 @@ public class TR069PageZxhnh198a extends PageObject {
             ButtonClickService stunConfigurationCollapseButton = (ButtonClickService) updateFieldStrategyFactory.findService(stunConfigurationCollapse.getType());
             stunConfigurationCollapseButton.execute(this.browser, stunConfigurationCollapse.getId());
 
-            Thread.sleep(3000);
+            Thread.sleep(this.sleepStep);
+
+            log.info("Setting STUN configuration fields. Fields={}",
+                    data.entrySet().stream()
+                            .filter(map -> !FieldsZxhnh198a.valueOf(map.getKey()).isFirstPhase())
+                            .collect(Collectors.toMap(Map.Entry::getKey, map -> map.getValue())));
+
 
             data.forEach((field, value) -> {
                 this.executeField(field, value, SECOND_FORM);
             });
 
-            Thread.sleep(5000);
+            FieldsZxhnh198a stunApply = FieldsZxhnh198a.STUN_APPLY;
+            ButtonClickService stunApplyButton = (ButtonClickService) updateFieldStrategyFactory.findService(stunApply.getType());
+            stunApplyButton.execute(this.browser, stunApply.getId());
+
+            Thread.sleep(this.sleepStep);
         } catch (Exception ex) {
             log.error("Error to update router.");
             throw ex;

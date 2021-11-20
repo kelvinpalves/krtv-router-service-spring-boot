@@ -15,7 +15,7 @@ public class LoginPageZxhnh198a extends PageObject  {
     private final TR069PageZxhnh198a tr069PageZxhnh198a;
     private final UpdateFieldStrategyFactory updateFieldStrategyFactory;
 
-    public TR069PageZxhnh198a submit(String urlBase, String username, String password) {
+    public TR069PageZxhnh198a submit(String urlBase, String username, String password) throws Exception {
         this.start(null);
 
         log.info("Trying to login: {}", this.url);

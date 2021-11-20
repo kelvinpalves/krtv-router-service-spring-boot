@@ -23,6 +23,9 @@ public abstract class PageObject {
     @Value("${config.timeout}")
     private Integer timeout;
 
+    @Value("${config.sleepStep}")
+    protected Integer sleepStep;
+
     @Value("${config.enableHeadless}")
     private boolean enableHeadless;
 
