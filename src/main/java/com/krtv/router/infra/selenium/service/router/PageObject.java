@@ -20,8 +20,16 @@ public abstract class PageObject {
     @Value("${config.pathWebDriver}")
     private String pathWebDriver;
 
+    @Value("${config.timeout}")
+    private Integer timeout;
+
+    @Value("${config.enableHeadless}")
+    private boolean enableHeadless;
+
     protected void start(WebDriver browser) {
         defineArguments();
+
+        log.info("Path chromedriver: {}", pathWebDriver);
 
         this.browser = browser == null
                 ? new ChromeDriver(options)
@@ -51,15 +59,18 @@ public abstract class PageObject {
         System.setProperty("webdriver.chrome.driver", this.pathWebDriver);
         options = new ChromeOptions();
         options.addArguments("--disable-blink-features=\"BlockCredentialedSubresources\"");
-        options.addArguments("--headless");
+        options.addArguments("--no-sandbox");
+
+        if (enableHeadless)
+            options.addArguments("--headless");
     }
 
     public final void configure() {
         this.browser
                 .manage()
                 .timeouts()
-                .implicitlyWait(30, TimeUnit.SECONDS)
-                .pageLoadTimeout(30, TimeUnit.SECONDS);
+                .implicitlyWait(this.timeout, TimeUnit.SECONDS)
+                .pageLoadTimeout(this.timeout, TimeUnit.SECONDS);
     }
 
     public void  close() {

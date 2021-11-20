@@ -14,6 +14,7 @@ public class ListTasksDto {
     private final String createdAt;
     private final String startedAt;
     private final String finishedAt;
+    private final String currentStatus;
 
     public static ListTasksDto converterMapperToDto(RouterTaskDataMapper mapper) {
         return ListTasksDto.builder()
@@ -23,6 +24,7 @@ public class ListTasksDto {
                 .createdAt(DateUtils.localDateTimeToStringDate(mapper.getCreatedAt()))
                 .startedAt(DateUtils.localDateTimeToStringDate(mapper.getStartedAt()))
                 .finishedAt(DateUtils.localDateTimeToStringDate(mapper.getFinishedAt()))
+                .currentStatus(mapper.getCurrentStatus())
                 .build();
     }
 }

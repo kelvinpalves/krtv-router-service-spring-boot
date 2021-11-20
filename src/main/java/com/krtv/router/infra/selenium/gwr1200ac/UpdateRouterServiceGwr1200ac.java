@@ -28,6 +28,7 @@ public class UpdateRouterServiceGwr1200ac implements UpdateRouterService {
 
             tr069PageGwr1200ac.execute(updateRouterDto.getData());
         } catch (Exception ex) {
+            log.error(ex);
             log.error("An error occurred during the updating process.");
             throw ex;
         } finally {

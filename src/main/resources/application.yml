@@ -1,37 +1,3 @@
-server:
-  error:
-    include-stacktrace: on_param
-
-config:
-  maximumNumberTries: 3
-  pathWebDriver: /home/kelvin/Documents/Pessoal/KRTV/drivers/chromedriver
-
 spring:
-  application:
-    name: krtv-router
-  datasource:
-    url: jdbc:mysql://localhost:3306/krtv_router?createDatabaseIfNotExist=true
-    username: root
-    password: forge
-  jpa:
-    hibernate:
-      ddl-auto: update
-  security:
-    user:
-      name: admin
-      password: admin
-
-logging:
-  level:
-    org:
-      hibernate:
-        SQL: DEBUG
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-
-info:
-  app: Update Router Service
+  profiles:
+    active: dev
