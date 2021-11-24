@@ -23,15 +23,24 @@ public class ListTaskController {
 
     @Operation(summary = "Listar tarefas", description = "Listar todas as tarefas de atualização de roteador cadastradas no sistema.", tags = "Atualização Roteador")
     @GetMapping
-    public ResponseEntity<Page<ListTasksDto>> list(@ParameterObject Pageable pageable) {
-        log.info("List all tasks");
-        return ResponseEntity.ok(listTasksInputBoundary.list(pageable));
+    public ResponseEntity<Page<ListTasksDto>> list(
+            @RequestParam(required = false) Integer port,
+            @RequestParam(required = false) String ip,
+            @ParameterObject Pageable pageable) {
+
+        TaskSearchRequest searchRequest = TaskSearchRequest.builder()
+                .port(port)
+                .ip(ip)
+                .build();
+
+        return ResponseEntity.ok(listTasksInputBoundary.list(searchRequest, pageable));
     }
 
     @Operation(summary = "Listar tarefas em aberto", description = "Listar todas as tarefas de atualização de roteador que estão em aberto no sistema.", tags = "Atualização Roteador")
     @GetMapping("only-open")
-    public ResponseEntity<Page<ListOpenTasksDto>> listOpen(@ParameterObject Pageable pageable) {
-        log.info("List all tasks");
+    public ResponseEntity<Page<ListOpenTasksDto>> listOpen(
+            @ParameterObject Pageable pageable) {
+
         return ResponseEntity.ok(listOpenTasksInputBoundary.list(pageable));
     }
 

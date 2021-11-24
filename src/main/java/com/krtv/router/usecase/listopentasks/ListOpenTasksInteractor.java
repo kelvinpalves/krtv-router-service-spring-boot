@@ -1,7 +1,9 @@
 package com.krtv.router.usecase.listopentasks;
 
 import com.krtv.router.infra.repository.RouterTaskDsGateway;
+import com.krtv.router.infra.repository.specification.TaskFilterSpecification;
 import com.krtv.router.infra.rest.ListOpenTasksDto;
+import com.krtv.router.infra.rest.TaskSearchRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

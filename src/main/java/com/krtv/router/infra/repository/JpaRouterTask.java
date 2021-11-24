@@ -10,13 +10,12 @@ import com.krtv.router.infra.rest.ListOpenTasksDto;
 import com.krtv.router.infra.rest.ListTasksDto;
 import com.krtv.router.infra.scheduled.UpdateRouterDto;
 import lombok.RequiredArgsConstructor;
-
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
@@ -93,8 +92,8 @@ public class JpaRouterTask implements RouterTaskDsGateway {
     }
 
     @Override
-    public Page<ListTasksDto> listAll(Pageable pageable) {
-        Page<ListTasksDto> list = routerTaskRepository.findAll(pageable).map(ListTasksDto::converterMapperToDto);
+    public Page<ListTasksDto> listAll(Specification<RouterTaskDataMapper> specification, Pageable pageable) {
+        Page<ListTasksDto> list = routerTaskRepository.findAll(specification, pageable).map(ListTasksDto::converterMapperToDto);
 
         list.getContent().stream().forEach(task -> {
             Map<String, String> data = getFieldsFromRouter(task.getId());
