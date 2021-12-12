@@ -39,7 +39,6 @@ public class UpdateRouterScheduled implements UpdateRouterCommand {
             updateRouterInputBoundary.update();
             disableRunning();
         } catch (Exception ex) {
-            log.error(ex);
             disableRunning();
         }
     }

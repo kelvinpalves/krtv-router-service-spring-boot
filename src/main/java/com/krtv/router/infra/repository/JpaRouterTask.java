@@ -6,6 +6,7 @@
 package com.krtv.router.infra.repository;
 
 import com.krtv.router.domain.RouterStatus;
+import com.krtv.router.infra.exception.NoRoutersWaitingException;
 import com.krtv.router.infra.rest.ListOpenTasksDto;
 import com.krtv.router.infra.rest.ListTasksDto;
 import com.krtv.router.infra.scheduled.UpdateRouterDto;
@@ -117,7 +118,7 @@ public class JpaRouterTask implements RouterTaskDsGateway {
                 .findFirst();
 
         if (!optionalRouterTaskDataMapper.isPresent()) {
-            throw new Exception("There is no routers waiting for update.");
+            throw new NoRoutersWaitingException("There is no routers waiting for update.");
         }
 
         return UpdateRouterDto.create(optionalRouterTaskDataMapper.get());
