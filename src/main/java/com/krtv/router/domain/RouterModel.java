@@ -12,6 +12,7 @@ package com.krtv.router.domain;
 public enum RouterModel {
     ZXHNH198A,
     GWR1200AC,
+    MULTILASER_PRO_RE708,
     GWR300N;
 
     public static RouterModel fromString(String model) {

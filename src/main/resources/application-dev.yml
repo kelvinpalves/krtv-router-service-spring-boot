@@ -6,7 +6,7 @@ config:
   maximumNumberTries: 5
   pathWebDriver: /home/kelvin/Documents/Pessoal/KRTV/drivers/chromedriver
   timeout: 60
-  enableHeadless: true
+  enableHeadless: false
   sleepStep: 3000
 
 spring:
