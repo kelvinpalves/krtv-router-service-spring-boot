@@ -1,6 +1,7 @@
 package com.krtv.router.usecase.updaterouter;
 
 import com.krtv.router.domain.RouterStatus;
+import com.krtv.router.infra.exception.NoRoutersWaitingException;
 import com.krtv.router.infra.repository.RouterTaskDsGateway;
 import com.krtv.router.infra.scheduled.UpdateRouterDto;
 import com.krtv.router.infra.selenium.service.router.UpdateRouterService;
@@ -31,14 +32,18 @@ public class UpdateRouterInteractor implements UpdateRouterInputBoundary {
             data.forEach(updateRouterDto::addData);
 
             UpdateRouterService service = strategyFactory.findService(updateRouterDto.getModel());
-            
+
             service.execute(updateRouterDto);
 
             this.updateStatus(updateRouterDto.getRouter(), RouterStatus.EXECUTED);
             this.updateNumberOfTries(updateRouterDto.getRouter());
             this.setTaskToExpired(updateRouterDto.getRouter());
+        } catch (NoRoutersWaitingException nex) {
+            log.error(nex.getMessage());
+            throw nex;
         }  catch (Exception ex) {
             log.error("Error to update router: {}", updateRouterDto);
+            log.error(ex);
 
             String router = updateRouterDto == null ? null : updateRouterDto.getRouter();
             this.updateStatus(router, RouterStatus.ERROR);
